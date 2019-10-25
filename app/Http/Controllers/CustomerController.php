@@ -54,8 +54,8 @@ class CustomerController extends Controller
 
     public function update(Request $request, $id)
     {
-        $this->customer->findOrFail($id);
-        $this->customer->update($request->all());
+        $customer = $this->customer->findOrFail($id);
+        $customer->update($request->all());
 
         return redirect()->route('customer.index');
     }
