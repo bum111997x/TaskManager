@@ -1,9 +1,9 @@
 @extends('home')
-@section('title','LIST CUSTOMER')
+@section('title','SEARCH BY NAME')
 @section('content')
     <nav class="navbar navbar-light" style="background-color: #e3f2fd;">
-        <a class="navbar-brand">BUM</a>
-        <form class="form-inline" action="{{route('customer.search')}}" method="get">
+        <a class="navbar-brand" href="{{route('customer.index')}}">SEARCH BY NAME</a>
+        <form class="form-inline" action="{{route('customer.search')}}">
             <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="search">
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
         </form>
@@ -18,24 +18,25 @@
             <th scope="col">Email</th>
             <th scope="col">Address</th>
             <th scope="col">Image</th>
+            <th scope="col">EDIT</th>
+            <th scope="col">DELETE</th>
 
-            <th scope="col" colspan="2" ><a href="{{route("customer.create")}}" class="btn btn-primary" >ADD</a></th>
         </tr>
         </thead>
         <tbody>
-        @foreach($customers as $key => $customer)
+        @foreach($DBSearch as $key => $customer)
             <tr>
                 <th scope="row">{{++$key}}</th>
                 <td>{{$customer->name}}</td>
                 <td>{{$customer->phone}}</td>
                 <td>{{$customer->email}}</td>
                 <td>{{$customer->address}}</td>
-                <td><img src="{{ asset('storage/images/' . $customer->image) }}" alt="" style="width: 150px; height: 100px"></td>
+                <td></td>
                 <td><a href="{{route('customer.edit', $customer->id)}}" class="btn btn-primary">EDIT</a></td>
                 <td><a href="{{route('customer.delete', $customer->id)}}" class="btn btn-primary">DELETE</a></td>
             </tr>
         @endforeach
         </tbody>
     </table>
-    {{$customers->links()}}
+    {{$DBSearch->links()}}
 @endsection

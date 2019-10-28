@@ -26,6 +26,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::prefix('customer')->group(function (){
     Route::get('index','CustomerController@index')->name('customer.index');
+    Route::get('search','CustomerController@search')->name('customer.search');
     Route::get('create','CustomerController@create')->name('customer.create');
     Route::post('create','CustomerController@store')->name('customer.store');
     Route::get('edit/{id}','CustomerController@edit')->name('customer.edit');

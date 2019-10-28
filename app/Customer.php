@@ -10,6 +10,7 @@ class Customer extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'id','name','phone' ,'email', 'address'
+        'id','name','phone' ,'email', 'address','image',
     ];
 }
+

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Customer;
 use Cassandra\Custom;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CustomerController extends Controller
 {
@@ -18,7 +19,7 @@ class CustomerController extends Controller
 
     public function index()
     {
-        $customers = $this->customer->all();
+        $customers = $this->customer->paginate(5);
         return view('index', compact('customers'));
     }
 
@@ -33,6 +34,23 @@ class CustomerController extends Controller
         $this->customer->phone = $request->phone;
         $this->customer->email = $request->email;
         $this->customer->address = $request->address;
+
+        if (!$request->hasFile('inputFile')) {
+            $this->customer->image = $request->inputFile;
+        } else {
+            $file = $request->file('inputFile');
+
+            $fileExtension = $file->getClientOriginalExtension();
+            $fileName = $request->inputFileName;
+
+            $newFileName = "$fileName.$fileExtension";
+
+            $request->file('inputFile')->storeAs('public/images', $newFileName);
+
+            $this->customer->image = $newFileName;
+        }
+
+
         $this->customer->save();
 
         return redirect()->route('customer.index');
@@ -58,6 +76,15 @@ class CustomerController extends Controller
         $customer->update($request->all());
 
         return redirect()->route('customer.index');
+    }
+
+    public function search(Request $request)
+    {
+        $search = $request->get('search');
+        $DBSearch = DB::table('customermanager')->where('name', 'LIKE', "%$search%")->paginate(5);
+
+        return view('search', compact('DBSearch'));
+
     }
 
 }

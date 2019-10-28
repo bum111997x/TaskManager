@@ -1,9 +1,10 @@
 @extends('home')
+@section('title','CREATE CUSTOMER INFO')
 @section('content')
         <div class="container">
             <div class="row" >
                 <div class="col-md-4">
-                    <form method="post" action="{{route('customer.store')}}">
+                    <form method="post" action="{{route('customer.store')}}" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group">
                             <label for="Name">Name:</label>
@@ -20,6 +21,17 @@
                         <div class="form-group">
                             <label for="Address">Address</label>
                             <input type="text" class="form-control" id="Address" name="address">
+                        </div>
+                        <div class="form-group">
+                            <label for="inputFileName">File Name</label>
+                            <input type="text"
+                                   class="form-control"
+                                   id="inputFileName"
+                                   name="inputFileName">
+                            <input type="file"
+                                   class="form-control-file"
+                                   id="inputFile"
+                                   name="inputFile">
                         </div>
                         <button type="submit" class="btn btn-primary">ADD</button>
                     </form>
